@@ -39,8 +39,8 @@ const features = [
 ];
 
 export default function Home() {
-  const { user, isLoading } = useAuth();
-
+  
+const { user } = useAuth();
   // Redirect authenticated users to profile
   //if (!isLoading && user) {
    // return <Navigate to="/profile" replace />;
