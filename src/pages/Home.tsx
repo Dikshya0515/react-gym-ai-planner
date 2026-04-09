@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Zap,
   Target,
@@ -42,9 +42,9 @@ export default function Home() {
   const { user, isLoading } = useAuth();
 
   // Redirect authenticated users to profile
-  if (!isLoading && user) {
-    return <Navigate to="/profile" replace />;
-  }
+  //if (!isLoading && user) {
+   // return <Navigate to="/profile" replace />;
+ // }
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -73,19 +73,31 @@ export default function Home() {
             tailored to your goals, experience, and schedule.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/onboarding">
-              <Button size="lg" className="gap-2">
-                Get Started Free
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-            </Link>
-            <Link to="/onboarding">
-              <Button variant="secondary" size="lg">
-                Sign In
-              </Button>
-            </Link>
+       <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {user ? (
+              <Link to="/profile">
+                <Button size="lg" className="gap-2">
+                  My Plan
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/onboarding">
+                  <Button size="lg" className="gap-2">
+                    Get Started Free
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
+                <Link to="/auth/sign-in">
+                  <Button variant="secondary" size="lg">
+                    Sign In
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
+
         </div>
       </section>
 

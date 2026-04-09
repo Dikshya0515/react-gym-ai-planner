@@ -30,6 +30,20 @@ planRouter.post("/generate", async (req: Request, res: Response) => {
     });
 
     const nextVersion = latestPlan ? latestPlan.version + 1 : 1;
+
+    // Prevent duplicate generation within 5 seconds
+    if (latestPlan) {
+      const lastPlanTime = await prisma.training_plans.findFirst({
+        where: { user_id: userId },
+        orderBy: { created_at: "desc" },
+        select: { created_at: true },
+      });
+      const secondsSinceLastPlan = (Date.now() - new Date(lastPlanTime!.created_at).getTime()) / 1000;
+      if (secondsSinceLastPlan < 5) {
+        return res.status(429).json({ error: "Please wait before generating again." });
+      }
+    }
+
     let planJson;
 
     try {
