@@ -64,7 +64,10 @@ export async function generateTrainingPlan(
       throw new Error("No content in AI response");
     }
 
-    const planData = JSON.parse(content);
+    const raw = content.trim();
+const jsonMatch = raw.match(/\{[\s\S]*\}/);
+if (!jsonMatch) throw new Error("No JSON found in response");
+const planData = JSON.parse(jsonMatch[0]);
 
     return formatPlanResponse(planData, normalizedProfile);
   } catch (error) {
