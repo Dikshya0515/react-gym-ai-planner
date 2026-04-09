@@ -39,7 +39,6 @@ const features = [
 ];
 
 export default function Home() {
-  
 const { user } = useAuth();
   // Redirect authenticated users to profile
   //if (!isLoading && user) {
